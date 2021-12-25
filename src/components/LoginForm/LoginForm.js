@@ -3,10 +3,11 @@ import {
   Form, Input, Button,
 } from 'antd';
 
-import './LoginForm.css';
+import styles from './LoginForm.module.css';
 
 const LoginForm = ({ onFinish }) => (
   <Form
+    className={styles.antForm}
     name="basic"
     labelCol={{
       span: 8,
@@ -50,7 +51,11 @@ const LoginForm = ({ onFinish }) => (
         span: 16,
       }}
     >
-      <Button type="primary" htmlType="submit">
+      <Button
+        className="antBtnPrimaryYellow"
+        type="primary"
+        htmlType="submit"
+      >
         Submit
       </Button>
     </Form.Item>

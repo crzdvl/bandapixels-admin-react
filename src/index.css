@@ -13,13 +13,6 @@
     height: 90vh !important;
 }
 
-.ant-btn-primary {
-    color: #171718 !important;
-    border-radius: 8px;
-    border-color: #efe318 !important;
-    background: #efe318 !important;
-}
-
 .ant-input-focused, .ant-input:focus {
     border-color: #efe318 !important;
     box-shadow: 0 0 0 2px rgb(239 227 24 / 20%);
@@ -36,4 +29,11 @@
 .ant-input-affix-wrapper-focused, .ant-input-affix-wrapper:focus {
     border-color: #efe318 !important;
     box-shadow: 0 0 0 2px rgb(239 227 24 / 20%);
+}
+
+.antBtnPrimaryYellow {
+    color: #171718 !important;
+    border-radius: 8px;
+    border-color: #efe318 !important;
+    background: #efe318 !important;
 }

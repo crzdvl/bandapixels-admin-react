@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Pagination } from 'antd';
-import { CustomTable } from '../../components/Table/Table';
 
 import { tagActions } from '../../store/tags/tag.actions';
 import { Header } from '../../components/Header/Header';
 import './TagsPage.css';
 import { TagForm } from '../../components/TagForm/TagForm';
+import { CustomTable } from '../../components/CustomTable/CustomTable';
 
 export const TagsPage = () => {
   const skip = 0;
@@ -58,12 +58,7 @@ export const TagsPage = () => {
     <div>
       <Header />
       <TagForm onFinish={onFinish} />
-      <CustomTable
-        tags={tags}
-        columns={['id', 'name', 'action']}
-        onNameChange={onNameChange}
-        onDelete={onDelete}
-      />
+      <CustomTable tags={tags} onNameChange={onNameChange} onDelete={onDelete} />
       <Pagination onChange={onChangePage} defaultCurrent={1} pageSize={take} total={countOfTags} />
     </div>
   );

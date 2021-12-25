@@ -1,0 +1,11 @@
+.antForm {
+    margin-top: 20vh;
+    width: 600px;
+}
+
+.antBtnPrimary {
+    color: #171718 !important;
+    border-radius: 8px;
+    border-color: #efe318 !important;
+    background: #efe318 !important;
+}

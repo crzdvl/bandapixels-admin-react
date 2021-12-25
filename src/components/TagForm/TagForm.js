@@ -3,10 +3,11 @@ import {
   Form, Input, Button,
 } from 'antd';
 
-import './TagForm.css';
+import styles from './TagForm.module.css';
 
 const TagForm = ({ onFinish }) => (
   <Form
+    className={styles.antForm}
     name="basic"
     labelCol={{
       span: 8,
@@ -38,7 +39,11 @@ const TagForm = ({ onFinish }) => (
         span: 16,
       }}
     >
-      <Button type="primary" htmlType="submit">
+      <Button
+        className="antBtnPrimaryYellow"
+        type="primary"
+        htmlType="submit"
+      >
         Submit
       </Button>
     </Form.Item>

@@ -1,12 +1,8 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
-const isAuth = (Component) => function Comp(props) {
-  return localStorage.getItem('token') ? <Component {...props} /> : <Redirect to="/" />;
-};
+const IsAuth = ({ children }) => (localStorage.getItem('token') ? children : <Navigate to="/" />);
 
-const isNotAuth = (Component) => function Comp(props) {
-  return !localStorage.getItem('token') ? <Component {...props} /> : <Redirect to="/posts" />;
-};
+const IsNotAuth = ({ children }) => (!localStorage.getItem('token') ? children : <Navigate to="/posts" />);
 
-export { isAuth, isNotAuth };
+export { IsAuth, IsNotAuth };

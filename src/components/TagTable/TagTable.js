@@ -1,12 +1,20 @@
 import React from 'react';
 import { Table, Space, Button } from 'antd';
 
-const CustomTable = ({ tags, onNameChange, onDelete }) => (
+import styles from './TagTable.module.css';
+
+const TagTable = ({ tags, onNameChange, onDelete }) => (
   <Table
+    className={styles.customTable}
     pagination={false}
     dataSource={tags}
+    rowKey={(record) => record.id}
   >
-    <Table.Column title="#" dataIndex="id" key="id" />
+    <Table.Column
+      title="#"
+      dataIndex="id"
+      key="id"
+    />
     <Table.Column
       title="Name"
       dataIndex="name"
@@ -40,4 +48,4 @@ const CustomTable = ({ tags, onNameChange, onDelete }) => (
   </Table>
 );
 
-export { CustomTable };
+export { TagTable };

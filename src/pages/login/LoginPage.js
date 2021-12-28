@@ -6,7 +6,7 @@ import { authActions } from '../../store/auth/auth.actions';
 import { Header } from '../../components/Header/Header';
 import { LoginForm } from '../../components/LoginForm/LoginForm';
 
-import zdarova from './zdarova.svg';
+import zdarova from '../../assets/images/zdarova.svg';
 import styles from './LoginPage.module.css';
 
 export const LoginPage = () => {

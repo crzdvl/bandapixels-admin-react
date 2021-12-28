@@ -1,6 +1,6 @@
 import { authConstants } from './auth.constants';
 import { authService } from '../../services/auth.service';
-import { history } from '../../helpers';
+import { history } from '../../helpers/history';
 
 function logout() {
   authService.logout();

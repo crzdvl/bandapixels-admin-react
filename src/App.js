@@ -1,19 +1,51 @@
 import React from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import {
+  Route, Routes, BrowserRouter,
+} from 'react-router-dom';
 
 import { LoginPage } from './pages/login/LoginPage';
-import { isAuth, isNotAuth } from './helpers/isAuth';
 import { TagsPage } from './pages/tags/TagsPage';
+import { CreatePostPage } from './pages/createPost/CreatePostPage';
+import { PostsPage } from './pages/posts/PostsPage';
+import { IsAuth, IsNotAuth } from './helpers/isAuth';
 
 const App = () => (
-  <div>
-    <Switch>
-      <Route exact path="/" component={isNotAuth(LoginPage)} />
-      <Route exact path="/posts" component={isAuth(TagsPage)} />
-    </Switch>
-  </div>
+  <BrowserRouter>
+    <Routes>
+      <Route
+        path="/"
+        element={(
+          <IsNotAuth>
+            <LoginPage />
+          </IsNotAuth>
+        )}
+      />
+      <Route
+        path="/tags"
+        element={(
+          <IsAuth>
+            <TagsPage />
+          </IsAuth>
+        )}
+      />
+      <Route
+        path="/posts"
+        element={(
+          <IsAuth>
+            <PostsPage />
+          </IsAuth>
+        )}
+      />
+      <Route
+        path="/createPost"
+        element={(
+          <IsAuth>
+            <CreatePostPage />
+          </IsAuth>
+        )}
+      />
+    </Routes>
+  </BrowserRouter>
 );
 
-const withRouterApp = withRouter(App);
-
-export { withRouterApp as App };
+export { App };

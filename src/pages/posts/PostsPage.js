@@ -1,97 +1,61 @@
 import React, { useEffect, useState } from 'react';
+
+import { Button, Pagination } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
-
-import { Table } from 'react-bootstrap';
-
+import { Layout } from '../../components/Layout/Layout';
+import { postActions } from '../../store/posts/post.actions';
 import { tagActions } from '../../store/tags/tag.actions';
-import { Header } from '../../components/Header/Header';
+import { PostTable } from '../../components/PostTable/PostTable';
 
-export const TagsPage = () => {
+export const PostsPage = () => {
+  const [itemsParams, setItemsParams] = useState({
+    skip: 0,
+    take: 5,
+  });
+
+  const [posts, setPosts] = useState();
+
   const dispatch = useDispatch();
-  let tags = useSelector((state) => state.tags);
+  const fetchedPosts = useSelector((state) => state?.posts?.posts?.data);
+  const countOfPosts = useSelector((state) => state?.posts?.posts?.count);
 
   useEffect(() => {
-    dispatch(tagActions.getAll(0, 10));
+    dispatch(postActions.getAll(itemsParams.skip, itemsParams.take));
   }, []);
 
-  const [inputs, setInputs] = useState({});
-  const onChangeHandler = (e) => setInputs((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
+  useEffect(() => {
+    setPosts(fetchedPosts);
+  }, [fetchedPosts]);
 
-  // eslint-disable-next-line no-unused-vars
-  const { register, handleSubmit } = useForm();
+  const onChangePage = (page) => {
+    const newSkip = (page - 1) * itemsParams.take;
+    dispatch(tagActions.getAll(newSkip, itemsParams.take));
 
-  const onSubmit = () => {
-    const { name } = inputs;
-
-    if (name) {
-      dispatch(tagActions.create(name));
-    }
+    setItemsParams({
+      ...itemsParams,
+      skip: newSkip,
+    });
   };
 
-  const onNameChange = (id, newName) => {
-    dispatch(tagActions.update(id, newName));
-  };
-
-  const onDelete = (id) => {
-    dispatch(tagActions.remove(id));
-    tags = tags.filter((tag) => tag.id !== id);
+  const onPublish = (id, published) => {
+    dispatch(postActions.publish(id, !published));
+    dispatch(postActions.getAll(itemsParams.skip, itemsParams.take));
   };
 
   return (
-    <div>
-      <Header />
-      <div className="col-md-6 col-md-offset-3">
-        <form name="form" onSubmit={handleSubmit(onSubmit)}>
-          <div className={`form-group${!inputs.name ? ' has-error' : ''}`}>
-            <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              className="form-control"
-              name="name"
-              value={inputs.name || ''}
-              onChange={onChangeHandler}
-            />
-            {!inputs.name
-                            && <div className="help-block">Username is required</div>}
-          </div>
-          <div className="form-group">
-            <button type="submit" className="btn btn-primary">Create tag</button>
-          </div>
-        </form>
-      </div>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tags.length ? tags.map(({ id, name }) => (
-            <tr key={id}>
-              <td>{id}</td>
-              <td
-                id={id}
-                contentEditable="true"
-                onKeyUpCapture={(e) => onNameChange(e.target.id, e.currentTarget.textContent)}
-              >
-                {name}
-              </td>
-              <td>
-                <button
-                  id={id}
-                  type="submit"
-                  onClick={(e) => onDelete(e.target.id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          )) : 'Loading...'}
-        </tbody>
-      </Table>
-    </div>
+    <Layout>
+      <>
+        <a href="/createPost">
+          <Button
+            className="antBtnPrimaryYellow"
+            type="primary"
+          >
+            Add new post
+          </Button>
+        </a>
+        <PostTable posts={posts} onPublish={onPublish} />
+        <Pagination onChange={onChangePage} pageSize={itemsParams.take} total={countOfPosts} />
+      </>
+    </Layout>
   );
 };

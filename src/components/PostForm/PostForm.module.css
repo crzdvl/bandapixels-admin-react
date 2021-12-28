@@ -1,0 +1,15 @@
+.antForm {
+    margin-top: 5vh;
+    width: 800px;
+}
+
+.antEditor {
+    justify-content: flex-end;
+}
+
+.antBtnPrimary {
+    color: #171718 !important;
+    border-radius: 8px;
+    border-color: #efe318 !important;
+    background: #efe318 !important;
+}

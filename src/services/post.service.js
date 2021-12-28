@@ -1,6 +1,8 @@
 import { authService } from './auth.service';
 import { authHeader } from '../helpers';
 
+import { history } from '../helpers/history';
+
 const backendUrl = 'http://localhost:3000/api';
 
 function getAll(skip = 0, take = 10) {
@@ -9,7 +11,7 @@ function getAll(skip = 0, take = 10) {
     method: 'GET',
     headers: { 'Content-Type': 'application/json', ...authorizationHeader },
   };
-  return fetch(`${backendUrl}/admin/tags?skip=${skip}&take=${take}`, requestOptions)
+  return fetch(`${backendUrl}/admin/posts?skip=${skip}&take=${take}`, requestOptions)
     .then(authService.handleResponse)
     .then((tags) => tags)
     .catch((err) => console.log(err));
@@ -22,25 +24,39 @@ function getOne(id) {
     headers: { 'Content-Type': 'application/json', ...authorizationHeader },
   };
 
-  return fetch(`${backendUrl}/admin/tags/${id}`, requestOptions)
+  return fetch(`${backendUrl}/admin/posts/${id}`, requestOptions)
     .then(authService.handleResponse)
-    .then((tag) => tag);
+    .then((post) => post);
 }
 
-function create(name) {
+function create(data) {
   const authorizationHeader = authHeader();
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...authorizationHeader },
-    body: JSON.stringify({ name }),
+    body: JSON.stringify(data),
   };
 
-  return fetch(`${backendUrl}/admin/tags`, requestOptions)
+  return fetch(`${backendUrl}/admin/posts`, requestOptions)
     .then(authService.handleResponse)
-    .then((tag) => tag);
+    .then(() => {
+      history.go('/posts');
+    });
 }
 
-function update(id, name) {
+function publish(id, publishValue) {
+  const authorizationHeader = authHeader();
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...authorizationHeader },
+  };
+
+  return fetch(`${backendUrl}/admin/posts/${id}/publish?publish=${publishValue}`, requestOptions)
+    .then(authService.handleResponse)
+    .then((data) => data);
+}
+
+function update(id, data) {
   const authorizationHeader = authHeader();
   const requestOptions = {
     method: 'PATCH',
@@ -49,10 +65,10 @@ function update(id, name) {
       'Accept-Patch': 'application/merge-patch+json',
       ...authorizationHeader,
     },
-    body: JSON.stringify({ name }),
+    body: JSON.stringify(data),
   };
 
-  return fetch(`${backendUrl}/admin/tags/${id}`, requestOptions)
+  return fetch(`${backendUrl}/admin/posts/${id}`, requestOptions)
     .then(authService.handleResponse)
     .then((tag) => tag);
 }
@@ -68,10 +84,11 @@ function remove(id) {
     .then(authService.handleResponse);
 }
 
-export const tagService = {
+export const postService = {
   getAll,
   getOne,
   create,
   update,
   remove,
+  publish,
 };

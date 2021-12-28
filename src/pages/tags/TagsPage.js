@@ -2,28 +2,32 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Pagination } from 'antd';
 
-import { tagActions } from '../../store/tags/tag.actions';
-import { Header } from '../../components/Header/Header';
 import './TagsPage.css';
+
+import { tagActions } from '../../store/tags/tag.actions';
+import { Layout } from '../../components/Layout/Layout';
 import { TagForm } from '../../components/TagForm/TagForm';
-import { CustomTable } from '../../components/CustomTable/CustomTable';
+import { TagTable } from '../../components/TagTable/TagTable';
+import { getCountOfTags, getFetchedTags, getLastAddedTag } from '../../store/tags/tag.selectors';
 
 export const TagsPage = () => {
-  const skip = 0;
-  const take = 5;
+  const [itemsParams, setItemsParams] = useState({
+    skip: 0,
+    take: 5,
+  });
 
   const dispatch = useDispatch();
 
-  const fetchedTags = useSelector((state) => state.tags.tags.data);
-  const countOfTags = useSelector((state) => state.tags.tags.count);
+  const fetchedTags = useSelector(getFetchedTags);
+  const countOfTags = useSelector(getCountOfTags);
 
-  const addedTag = useSelector((state) => state.tags.tag);
+  const addedTag = useSelector(getLastAddedTag);
 
   const [deletedTag, setDeletedTag] = useState();
   const [tags, setTags] = useState(fetchedTags);
 
   useEffect(() => {
-    dispatch(tagActions.getAll(skip, take));
+    dispatch(tagActions.getAll(itemsParams.skip, itemsParams.take));
   }, [dispatch]);
 
   useEffect(() => {
@@ -31,7 +35,7 @@ export const TagsPage = () => {
   }, [fetchedTags]);
 
   useEffect(() => {
-    dispatch(tagActions.getAll(skip, take));
+    dispatch(tagActions.getAll(itemsParams.skip, itemsParams.take));
   }, [addedTag, deletedTag]);
 
   const onNameChange = (id, newName) => {
@@ -46,8 +50,13 @@ export const TagsPage = () => {
   };
 
   const onChangePage = (page) => {
-    const newSkip = (page - 1) * take;
-    dispatch(tagActions.getAll(newSkip, take));
+    const newSkip = (page - 1) * itemsParams.take;
+    dispatch(tagActions.getAll(newSkip, itemsParams.take));
+
+    setItemsParams({
+      ...itemsParams,
+      skip: newSkip,
+    });
   };
 
   const onFinish = ({ name }) => {
@@ -55,11 +64,12 @@ export const TagsPage = () => {
   };
 
   return (
-    <div>
-      <Header />
-      <TagForm onFinish={onFinish} />
-      <CustomTable tags={tags} onNameChange={onNameChange} onDelete={onDelete} />
-      <Pagination onChange={onChangePage} defaultCurrent={1} pageSize={take} total={countOfTags} />
-    </div>
+    <Layout>
+      <>
+        <TagForm onFinish={onFinish} />
+        <TagTable tags={tags} onNameChange={onNameChange} onDelete={onDelete} />
+        <Pagination onChange={onChangePage} pageSize={itemsParams.take} total={countOfTags} />
+      </>
+    </Layout>
   );
 };

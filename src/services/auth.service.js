@@ -8,7 +8,6 @@ function logout() {
 
 function handleResponse(response) {
   return response.text().then((text) => {
-    console.log(text);
     const data = text && JSON.parse(text);
     if (!response.ok) {
       if (response.status === 401) {
@@ -37,6 +36,8 @@ function login(email, password) {
     .then((user) => {
       if (user?.access_token) {
         localStorage.setItem('token', JSON.stringify(user.access_token));
+        // eslint-disable-next-line no-restricted-globals
+        history.go('/posts');
       }
 
       return user;

@@ -16,7 +16,7 @@ export const Header = () => {
   return (
     <Layout.Header theme="light">
       <div className="logo">
-        <img src={logo} alt="logo" />
+        <a href="https://bandapixels.com/"><img src={logo} alt="logo" /></a>
       </div>
       { localStorage.getItem('token') && (
         <Menu theme="light" mode="horizontal" defaultSelectedKeys={['1']}>

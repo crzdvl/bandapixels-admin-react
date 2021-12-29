@@ -57,9 +57,7 @@ function create(data) {
     postService.create(data)
       .then(
         (post) => {
-          dispatch(success(post), {
-            payload: post,
-          });
+          dispatch(success(post));
         },
         (error) => {
           dispatch(failure(error));
@@ -69,9 +67,9 @@ function create(data) {
 }
 
 function publish(id, publish) {
-  function request() { return { type: postConstants.CREATE_REQUEST }; }
-  function success(data) { return { type: postConstants.CREATE_SUCCESS, data }; }
-  function failure(error) { return { type: postConstants.CREATE_FAILURE, error }; }
+  function request() { return { type: postConstants.PUBLISH_REQUEST }; }
+  function success(data) { return { type: postConstants.PUBLISH_SUCCESS, data }; }
+  function failure(error) { return { type: postConstants.PUBLISH_FAILURE, error }; }
 
   return (dispatch) => {
     dispatch(request());
@@ -101,9 +99,7 @@ function update(id, data) {
     postService.update(id, data)
       .then(
         (post) => {
-          dispatch(success(post), {
-            payload: post,
-          });
+          dispatch(success(post));
         },
         (error) => {
           dispatch(failure(error));

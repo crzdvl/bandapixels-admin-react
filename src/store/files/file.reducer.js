@@ -21,6 +21,8 @@ export function file(state = initialState(), action) {
         ...state,
         error: action.error,
       };
+    case fileConstants.RESET:
+      return initialState();
     default:
       return state;
   }

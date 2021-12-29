@@ -1,6 +1,6 @@
 .antForm {
     margin-top: 5vh;
-    width: 600px;
+    display: flex;
 }
 
 .antBtnPrimary {

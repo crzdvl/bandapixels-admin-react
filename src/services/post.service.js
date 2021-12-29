@@ -13,7 +13,7 @@ function getAll(skip = 0, take = 10) {
   };
   return fetch(`${backendUrl}/admin/posts?skip=${skip}&take=${take}`, requestOptions)
     .then(authService.handleResponse)
-    .then((tags) => tags)
+    .then((posts) => posts)
     .catch((err) => console.log(err));
 }
 
@@ -80,7 +80,7 @@ function remove(id) {
     headers: { 'Content-Type': 'application/json', ...authorizationHeader },
   };
 
-  return fetch(`${backendUrl}/admin/tags/${id}`, requestOptions)
+  return fetch(`${backendUrl}/admin/posts/${id}`, requestOptions)
     .then(authService.handleResponse);
 }
 

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-
 import { Button, Pagination } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { Layout } from '../../components/Layout/Layout';
 import { postActions } from '../../store/posts/post.actions';
-import { tagActions } from '../../store/tags/tag.actions';
 import { PostTable } from '../../components/PostTable/PostTable';
 
 export const PostsPage = () => {
@@ -13,15 +12,16 @@ export const PostsPage = () => {
     take: 5,
   });
 
-  const [posts, setPosts] = useState();
+  const [posts, setPosts] = useState([]);
 
   const dispatch = useDispatch();
   const fetchedPosts = useSelector((state) => state?.posts?.posts?.data);
   const countOfPosts = useSelector((state) => state?.posts?.posts?.count);
+  const [deletedPost, setDeletedPost] = useState();
 
   useEffect(() => {
     dispatch(postActions.getAll(itemsParams.skip, itemsParams.take));
-  }, []);
+  }, [deletedPost]);
 
   useEffect(() => {
     setPosts(fetchedPosts);
@@ -29,7 +29,7 @@ export const PostsPage = () => {
 
   const onChangePage = (page) => {
     const newSkip = (page - 1) * itemsParams.take;
-    dispatch(tagActions.getAll(newSkip, itemsParams.take));
+    dispatch(postActions.getAll(newSkip, itemsParams.take));
 
     setItemsParams({
       ...itemsParams,
@@ -42,10 +42,17 @@ export const PostsPage = () => {
     dispatch(postActions.getAll(itemsParams.skip, itemsParams.take));
   };
 
+  const onDelete = (id) => {
+    dispatch(postActions.remove(id));
+    setPosts(posts.filter((post) => post.id !== Number(id)));
+
+    setDeletedPost(id);
+  };
+
   return (
     <Layout>
       <>
-        <a href="/createPost">
+        <a className="m30" href="/createPost">
           <Button
             className="antBtnPrimaryYellow"
             type="primary"
@@ -53,8 +60,8 @@ export const PostsPage = () => {
             Add new post
           </Button>
         </a>
-        <PostTable posts={posts} onPublish={onPublish} />
-        <Pagination onChange={onChangePage} pageSize={itemsParams.take} total={countOfPosts} />
+        <PostTable posts={posts} onDelete={onDelete} onPublish={onPublish} />
+        <Pagination className="m30" onChange={onChangePage} pageSize={itemsParams.take} total={countOfPosts} />
       </>
     </Layout>
   );

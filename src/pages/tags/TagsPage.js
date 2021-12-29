@@ -68,7 +68,7 @@ export const TagsPage = () => {
       <>
         <TagForm onFinish={onFinish} />
         <TagTable tags={tags} onNameChange={onNameChange} onDelete={onDelete} />
-        <Pagination onChange={onChangePage} pageSize={itemsParams.take} total={countOfTags} />
+        <Pagination className="m30" onChange={onChangePage} pageSize={itemsParams.take} total={countOfTags} />
       </>
     </Layout>
   );

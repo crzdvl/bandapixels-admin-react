@@ -8,6 +8,7 @@ export const CustomDropdown = ({ tags, onSelect, selectedDefault }) => (
     placeholder="select at least one tag"
     onChange={onSelect}
     optionLabelProp="label"
+    optionFilterProp="label"
     defaultValue={selectedDefault}
   >
     {tags?.length && tags.map((tag) => (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { fileActions } from '../../store/files/file.actions';
 import { Header } from '../../components/Header/Header';
 import { PostForm } from '../../components/PostForm/PostForm';
@@ -11,6 +11,7 @@ import { tagActions } from '../../store/tags/tag.actions';
 
 export const CreatePostPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [countOfNedeedUploads, setCountOfNedeedUploads] = useState(0);
   const [searchParams] = useSearchParams();
   const postId = searchParams.get('id');
@@ -27,12 +28,7 @@ export const CreatePostPage = () => {
   const [tags, setTags] = useState(fetchedTags);
   const [htmlValue, setHtmlValue] = useState('');
   const [selectedTags, setSelectedTags] = useState([]);
-  const [imagePreview, setImagePreview] = useState([{
-    uid: '-1',
-    name: 'image.png',
-    status: 'done',
-    url: 'http://localhost:3000/api/admin/files/59',
-  }]);
+  const [imagePreview, setImagePreview] = useState([]);
 
   useEffect(() => {
     dispatch(tagActions.getAll(0, 100));
@@ -43,7 +39,7 @@ export const CreatePostPage = () => {
   }, []);
 
   useEffect(() => {
-    if (fetchedPost && Object.keys(fetchedPost.post).length !== 0) {
+    if (postId && fetchedPost && Object.keys(fetchedPost.post).length !== 0) {
       setImage([
         ...image,
         {
@@ -87,10 +83,9 @@ export const CreatePostPage = () => {
         body: htmlValue,
         tagsIds: selectedTags,
       };
-
       dispatch(postActions.update(postId, postData));
-    }
-    if (
+      navigate('/posts');
+    } else if (
       formData
       && htmlValue
       && selectedTags.length
@@ -110,6 +105,7 @@ export const CreatePostPage = () => {
         tagsIds: selectedTags,
       };
       dispatch(postActions.create(postData));
+      navigate('/posts');
     }
   }, [uploadedFiles]);
 
@@ -139,38 +135,28 @@ export const CreatePostPage = () => {
       dispatch(fileActions.upload('PREVIEW', imagePreview[0]));
     }
   };
-
+  const PostFormData = (
+    <PostForm
+      htmlValue={htmlValue}
+      formInitialValue={formInitialValue}
+      setHtmlValue={setHtmlValue}
+      image={image}
+      setImage={setImage}
+      imagePreview={imagePreview}
+      setImagePreview={setImagePreview}
+      tags={tags}
+      selectedDefault={selectedDefaultTags}
+      onSelect={setSelectedTags}
+      onFinish={onFinish}
+    />
+  );
   return (
     <div>
       <Header />
       {postId ? (Object.keys(formInitialValue).length !== 0 && (
-        <PostForm
-          htmlValue={htmlValue}
-          formInitialValue={formInitialValue}
-          setHtmlValue={setHtmlValue}
-          image={image}
-          setImage={setImage}
-          imagePreview={imagePreview}
-          setImagePreview={setImagePreview}
-          tags={tags}
-          selectedDefault={selectedDefaultTags}
-          onSelect={setSelectedTags}
-          onFinish={onFinish}
-        />
+        PostFormData
       )) : (
-        <PostForm
-          htmlValue={htmlValue}
-          formInitialValue={formInitialValue}
-          setHtmlValue={setHtmlValue}
-          image={image}
-          setImage={setImage}
-          imagePreview={imagePreview}
-          setImagePreview={setImagePreview}
-          tags={tags}
-          selectedDefault={selectedDefaultTags}
-          onSelect={setSelectedTags}
-          onFinish={onFinish}
-        />
+        PostFormData
       )}
     </div>
   );

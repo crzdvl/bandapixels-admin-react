@@ -23,6 +23,15 @@ function upload(type, file) {
   };
 }
 
+function resetStore() {
+  function success() { return { type: fileConstants.RESET }; }
+
+  return (dispatch) => {
+    dispatch(success());
+  };
+}
+
 export const fileActions = {
   upload,
+  resetStore,
 };

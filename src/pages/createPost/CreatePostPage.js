@@ -41,18 +41,17 @@ export const CreatePostPage = () => {
 
   useEffect(() => {
     if (postId && fetchedPost && Object.keys(fetchedPost.post).length !== 0) {
+      const fileContentUrl = 'http://localhost:3000/api/admin/files/';
       setImage([
         ...image,
         {
-          status: 'done',
-          url: `http://localhost:3000/api/admin/files/${fetchedPost.post.imageId}`,
+          url: `${fileContentUrl}${fetchedPost.post.imageId}`,
         },
       ]);
       setImagePreview([
         ...image,
         {
-          status: 'done',
-          url: `http://localhost:3000/api/admin/files/${fetchedPost.post.previewImageId}`,
+          url: `${fileContentUrl}${fetchedPost.post.previewImageId}`,
         },
       ]);
       setFormInitialValue({
@@ -68,18 +67,19 @@ export const CreatePostPage = () => {
   }, [fetchedTags]);
 
   useEffect(() => {
+    const postData = {
+      ...formData,
+      imageId:
+        uploadedFiles?.files?.filter((file) => file.type === 'IMAGE')[0]?.id
+        || fetchedPost?.post?.imageId,
+      previewImageId:
+        uploadedFiles?.files?.filter((file) => file.type === 'PREVIEW')[0]?.id
+        || fetchedPost?.post?.previewImageId,
+      body: htmlValue,
+      tagsIds: selectedTags,
+    };
+
     if (postId && (uploadedFiles.files.length === countOfNedeedUploads)) {
-      const postData = {
-        ...formData,
-        imageId:
-          uploadedFiles?.files?.filter((file) => file.type === 'IMAGE')[0]?.id
-          || fetchedPost?.post?.imageId,
-        previewImageId:
-          uploadedFiles?.files?.filter((file) => file.type === 'PREVIEW')[0]?.id
-          || fetchedPost?.post?.previewImageId,
-        body: htmlValue,
-        tagsIds: selectedTags,
-      };
       dispatch(postActions.update(postId, postData));
       navigate('/posts');
     } else if (
@@ -90,17 +90,6 @@ export const CreatePostPage = () => {
       && imagePreview.length
       && (uploadedFiles.files.length === countOfNedeedUploads)
     ) {
-      const postData = {
-        ...formData,
-        imageId:
-          uploadedFiles?.files?.filter((file) => file.type === 'IMAGE')[0]?.id
-          || fetchedPost?.post?.imageId,
-        previewImageId:
-          uploadedFiles?.files?.filter((file) => file.type === 'PREVIEW')[0]?.id
-          || fetchedPost?.post?.previewImageId,
-        body: htmlValue,
-        tagsIds: selectedTags,
-      };
       dispatch(postActions.create(postData));
       navigate('/posts');
     }

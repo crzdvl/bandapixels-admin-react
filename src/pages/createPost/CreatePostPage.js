@@ -9,28 +9,28 @@ import { getFetchedTags } from '../../store/tags/tag.selectors';
 import { postActions } from '../../store/posts/post.actions';
 import { tagActions } from '../../store/tags/tag.actions';
 import { getLastAddedPost } from '../../store/posts/post.selectors';
+import { getUploadedFiles } from '../../store/files/file.selectors';
 
 export const CreatePostPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [countOfNedeedUploads, setCountOfNedeedUploads] = useState(0);
-  const [searchParams] = useSearchParams();
-  const postId = searchParams.get('id');
-  const [formInitialValue, setFormInitialValue] = useState({});
-  const [selectedDefaultTags, setSelectedDefaultTags] = useState([]);
 
-  const uploadedFiles = useSelector((state) => state.file);
   const fetchedTags = useSelector(getFetchedTags);
-
   const fetchedPost = useSelector(getLastAddedPost);
+  const uploadedFiles = useSelector(getUploadedFiles);
 
+  const [searchParams] = useSearchParams();
   const [formData, setFormData] = useState();
   const [image, setImage] = useState([]);
   const [tags, setTags] = useState(fetchedTags);
   const [htmlValue, setHtmlValue] = useState('');
   const [selectedTags, setSelectedTags] = useState([]);
   const [imagePreview, setImagePreview] = useState([]);
+  const [formInitialValue, setFormInitialValue] = useState({});
+  const [selectedDefaultTags, setSelectedDefaultTags] = useState([]);
+  const [countOfNedeedUploads, setCountOfNedeedUploads] = useState(2);
 
+  const postId = searchParams.get('id');
   useEffect(() => {
     dispatch(tagActions.getAll(0, 100));
 
@@ -44,8 +44,6 @@ export const CreatePostPage = () => {
       setImage([
         ...image,
         {
-          uid: '-1',
-          name: 'image.png',
           status: 'done',
           url: `http://localhost:3000/api/admin/files/${fetchedPost.post.imageId}`,
         },
@@ -53,8 +51,6 @@ export const CreatePostPage = () => {
       setImagePreview([
         ...image,
         {
-          uid: '-1',
-          name: 'image.png',
           status: 'done',
           url: `http://localhost:3000/api/admin/files/${fetchedPost.post.previewImageId}`,
         },
@@ -112,14 +108,15 @@ export const CreatePostPage = () => {
 
   const onFinish = (data) => {
     if (postId) {
+      const countOfNewUploads = 0;
       setFormData(data);
 
       if (image[0] && !('url' in image[0])) {
-        setCountOfNedeedUploads(countOfNedeedUploads + 1);
+        setCountOfNedeedUploads(countOfNewUploads + 1);
         dispatch(fileActions.upload('IMAGE', image[0]));
       }
       if (imagePreview[0] && !('url' in imagePreview[0])) {
-        setCountOfNedeedUploads(countOfNedeedUploads + 1);
+        setCountOfNedeedUploads(countOfNewUploads + 1);
         dispatch(fileActions.upload('PREVIEW', imagePreview[0]));
       }
     } else if (

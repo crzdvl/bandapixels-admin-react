@@ -1,6 +1,7 @@
 import { authConstants } from './auth.constants';
+import { localStorageService } from '../../services/localStorage.service';
 
-const user = JSON.parse(localStorage.getItem('token'));
+const user = localStorageService.getKey('token');
 const initialState = user ? { loggedIn: true, user } : {};
 
 export function auth(state = initialState, action) {

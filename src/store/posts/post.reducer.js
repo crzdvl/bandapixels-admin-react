@@ -42,21 +42,6 @@ export function posts(state = initialState(), action) {
         ...state,
         error: action.error,
       };
-    case postConstants.UPDATE_REQUEST:
-      return {
-        ...state,
-        loading: true,
-      };
-    case postConstants.UPDATE_SUCCESS:
-      return {
-        ...state,
-        post: action.post,
-      };
-    case postConstants.UPDATE_FAILURE:
-      return {
-        ...state,
-        error: action.error,
-      };
     case postConstants.GETONE_REQUEST:
       return {
         ...state,
@@ -76,3 +61,18 @@ export function posts(state = initialState(), action) {
       return state;
   }
 }
+
+/*
+[postConstants.GETALL_REQUEST]: {
+...state,
+    loading: true,
+},
+[postConstants.GETALL_SUCCESS]: {
+...state,
+    posts: {
+    count: action.count,
+      data: action.data,
+  },
+},
+})[action.type] ?? state;
+} */

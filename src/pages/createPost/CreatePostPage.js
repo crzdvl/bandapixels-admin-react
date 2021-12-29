@@ -8,6 +8,7 @@ import { PostForm } from '../../components/PostForm/PostForm';
 import { getFetchedTags } from '../../store/tags/tag.selectors';
 import { postActions } from '../../store/posts/post.actions';
 import { tagActions } from '../../store/tags/tag.actions';
+import { getLastAddedPost } from '../../store/posts/post.selectors';
 
 export const CreatePostPage = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ export const CreatePostPage = () => {
   const uploadedFiles = useSelector((state) => state.file);
   const fetchedTags = useSelector(getFetchedTags);
 
-  const fetchedPost = useSelector((state) => state.posts.post);
+  const fetchedPost = useSelector(getLastAddedPost);
 
   const [formData, setFormData] = useState();
   const [image, setImage] = useState([]);

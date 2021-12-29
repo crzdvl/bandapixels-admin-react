@@ -1,7 +1,9 @@
+import { localStorageService } from './localStorage.service';
+
 const backendUrl = 'http://localhost:3000/api';
 
 function logout() {
-  localStorage.removeItem('token');
+  localStorageService.removeKey('token');
   // eslint-disable-next-line no-restricted-globals
   history.go('/');
 }
@@ -33,9 +35,10 @@ function login(email, password) {
 
   return fetch(`${backendUrl}/users/login`, requestOptions)
     .then(handleResponse)
-    .then((user) => {
+    .then(async (user) => {
       if (user?.access_token) {
-        localStorage.setItem('token', JSON.stringify(user.access_token));
+        await localStorageService.setKey('token', user.access_token);
+
         // eslint-disable-next-line no-restricted-globals
         history.go('/posts');
       }

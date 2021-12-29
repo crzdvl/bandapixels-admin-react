@@ -6,7 +6,12 @@ function setKey(key, value) {
   return localStorage.setItem(key, JSON.stringify(value));
 }
 
-export const tagService = {
+function removeKey(key) {
+  return localStorage.removeItem(key);
+}
+
+export const localStorageService = {
   getKey,
   setKey,
+  removeKey,
 };

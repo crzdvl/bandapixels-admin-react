@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Layout } from '../../components/Layout/Layout';
 import { postActions } from '../../store/posts/post.actions';
 import { PostTable } from '../../components/PostTable/PostTable';
+import { getCountOfPosts, getFetchedPosts } from '../../store/posts/post.selectors';
 
 export const PostsPage = () => {
   const [itemsParams, setItemsParams] = useState({
@@ -15,8 +16,8 @@ export const PostsPage = () => {
   const [posts, setPosts] = useState([]);
 
   const dispatch = useDispatch();
-  const fetchedPosts = useSelector((state) => state?.posts?.posts?.data);
-  const countOfPosts = useSelector((state) => state?.posts?.posts?.count);
+  const fetchedPosts = useSelector(getFetchedPosts);
+  const countOfPosts = useSelector(getCountOfPosts);
   const [deletedPost, setDeletedPost] = useState();
 
   useEffect(() => {
@@ -51,18 +52,16 @@ export const PostsPage = () => {
 
   return (
     <Layout>
-      <>
-        <a className="m30" href="/createPost">
-          <Button
-            className="antBtnPrimaryYellow"
-            type="primary"
-          >
-            Add new post
-          </Button>
-        </a>
-        <PostTable posts={posts} onDelete={onDelete} onPublish={onPublish} />
-        <Pagination className="m30" onChange={onChangePage} pageSize={itemsParams.take} total={countOfPosts} />
-      </>
+      <a className="m30" href="/createPost">
+        <Button
+          className="antBtnPrimaryYellow"
+          type="primary"
+        >
+          Add new post
+        </Button>
+      </a>
+      <PostTable posts={posts} onDelete={onDelete} onPublish={onPublish} />
+      <Pagination className="m30" onChange={onChangePage} pageSize={itemsParams.take} total={countOfPosts} />
     </Layout>
   );
 };

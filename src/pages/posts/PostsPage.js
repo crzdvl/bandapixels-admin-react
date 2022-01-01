@@ -8,17 +8,16 @@ import { PostTable } from '../../components/PostTable/PostTable';
 import { getCountOfPosts, getFetchedPosts } from '../../store/posts/post.selectors';
 
 export const PostsPage = () => {
+  const dispatch = useDispatch();
+  const fetchedPosts = useSelector(getFetchedPosts);
+  const countOfPosts = useSelector(getCountOfPosts);
+
+  const [posts, setPosts] = useState([]);
+  const [deletedPost, setDeletedPost] = useState();
   const [itemsParams, setItemsParams] = useState({
     skip: 0,
     take: 5,
   });
-
-  const [posts, setPosts] = useState([]);
-
-  const dispatch = useDispatch();
-  const fetchedPosts = useSelector(getFetchedPosts);
-  const countOfPosts = useSelector(getCountOfPosts);
-  const [deletedPost, setDeletedPost] = useState();
 
   useEffect(() => {
     dispatch(postActions.getAll(itemsParams.skip, itemsParams.take));

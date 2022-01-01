@@ -1,5 +1,5 @@
 import { tagConstants } from './tag.constants';
-import { tagService } from '../../services';
+import { tagService } from '../../services/tag.service';
 
 function getAll(skip, take) {
   function request() { return { type: tagConstants.GETALL_REQUEST }; }
@@ -30,7 +30,7 @@ function getOne(id) {
   function failure(error) { return { type: tagConstants.GETONE_FAILURE, error }; }
 
   return (dispatch) => {
-    dispatch(request({ id }));
+    dispatch(request());
 
     tagService.getOne(id)
       .then(
@@ -52,14 +52,12 @@ function create(name) {
   function failure(error) { return { type: tagConstants.CREATE_FAILURE, error }; }
 
   return (dispatch) => {
-    dispatch(request({ name }));
+    dispatch(request());
 
     tagService.create(name)
       .then(
         (tag) => {
-          dispatch(success(tag), {
-            payload: tag,
-          });
+          dispatch(success(tag));
         },
         (error) => {
           dispatch(failure(error));
@@ -79,9 +77,7 @@ function update(id, name) {
     tagService.update(id, name)
       .then(
         (tag) => {
-          dispatch(success(tag), {
-            payload: tag,
-          });
+          dispatch(success(tag));
         },
         (error) => {
           dispatch(failure(error));
@@ -101,9 +97,7 @@ function remove(id) {
     tagService.remove(id)
       .then(
         (tag) => {
-          dispatch(success(tag), {
-            payload: tag,
-          });
+          dispatch(success(tag));
         },
         (error) => {
           dispatch(failure(error));

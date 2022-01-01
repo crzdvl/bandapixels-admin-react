@@ -1,5 +1,5 @@
 import { fileConstants } from './file.constants';
-import { fileService } from '../../services';
+import { fileService } from '../../services/file.service';
 
 function upload(type, file) {
   function request() { return { type: fileConstants.UPLOAD_REQUEST }; }

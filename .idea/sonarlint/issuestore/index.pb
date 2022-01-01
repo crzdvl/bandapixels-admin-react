@@ -16,10 +16,6 @@ W
 'src/components/Layout/Layout.module.css,4/4/4402d3cc6786e1d32062dd0e2ce5d2a4775f7256
 [
 +src/components/TagTable/TagTable.module.css,f/7/f7e8fe2856693856f369138b40b92f52bddd14b6
-Q
-!src/store/files/file.selectors.js,b/d/bdb058b7fb0b846456318e8965a2444f3585a36b
-<
-src/index.js,f/9/f900edc44cb929c2267a16100a32851f6d5b477d
 J
 src/assets/images/logo.svg,b/e/bee4f9f8858eb6f9b569d4d7479354c43bb1698e
 M

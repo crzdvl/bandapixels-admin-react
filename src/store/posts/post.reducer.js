@@ -61,18 +61,3 @@ export function posts(state = initialState(), action) {
       return state;
   }
 }
-
-/*
-[postConstants.GETALL_REQUEST]: {
-...state,
-    loading: true,
-},
-[postConstants.GETALL_SUCCESS]: {
-...state,
-    posts: {
-    count: action.count,
-      data: action.data,
-  },
-},
-})[action.type] ?? state;
-} */

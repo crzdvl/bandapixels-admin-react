@@ -11,18 +11,16 @@ import { TagTable } from '../../components/TagTable/TagTable';
 import { getCountOfTags, getFetchedTags, getLastAddedTag } from '../../store/tags/tag.selectors';
 
 export const TagsPage = () => {
-  const [itemsParams, setItemsParams] = useState({
-    skip: 0,
-    take: 5,
-  });
-
   const dispatch = useDispatch();
 
   const fetchedTags = useSelector(getFetchedTags);
   const countOfTags = useSelector(getCountOfTags);
-
   const addedTag = useSelector(getLastAddedTag);
 
+  const [itemsParams, setItemsParams] = useState({
+    skip: 0,
+    take: 5,
+  });
   const [deletedTag, setDeletedTag] = useState();
   const [tags, setTags] = useState(fetchedTags);
 
@@ -37,10 +35,6 @@ export const TagsPage = () => {
   useEffect(() => {
     dispatch(tagActions.getAll(itemsParams.skip, itemsParams.take));
   }, [addedTag, deletedTag]);
-
-  const onNameChange = (id, newName) => {
-    dispatch(tagActions.update(id, newName));
-  };
 
   const onDelete = (id) => {
     dispatch(tagActions.remove(id));
@@ -59,9 +53,8 @@ export const TagsPage = () => {
     });
   };
 
-  const onFinish = ({ name }) => {
-    dispatch(tagActions.create(name));
-  };
+  const onNameChange = (id, newName) => dispatch(tagActions.update(id, newName));
+  const onFinish = ({ name }) => dispatch(tagActions.create(name));
 
   return (
     <Layout>

@@ -1,10 +1,11 @@
 import { localStorageService } from './localStorage.service';
+import { history } from '../helpers/history';
 
 const backendUrl = 'http://localhost:3000/api';
 
 function logout() {
   localStorageService.removeKey('token');
-  // eslint-disable-next-line no-restricted-globals
+
   history.go('/');
 }
 
@@ -14,7 +15,7 @@ function handleResponse(response) {
     if (!response.ok) {
       if (response.status === 401) {
         logout();
-        // eslint-disable-next-line no-restricted-globals
+
         history.go('/');
       }
 
@@ -39,7 +40,6 @@ function login(email, password) {
       if (user?.access_token) {
         await localStorageService.setKey('token', user.access_token);
 
-        // eslint-disable-next-line no-restricted-globals
         history.go('/posts');
       }
 

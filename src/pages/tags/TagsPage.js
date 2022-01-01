@@ -8,7 +8,9 @@ import { tagActions } from '../../store/tags/tag.actions';
 import { Layout } from '../../components/Layout/Layout';
 import { TagForm } from '../../components/TagForm/TagForm';
 import { TagTable } from '../../components/TagTable/TagTable';
-import { getCountOfTags, getFetchedTags, getLastAddedTag } from '../../store/tags/tag.selectors';
+import {
+  getCountOfTags, getFetchedTags, getLastAddedTag, getLastDeletedTag,
+} from '../../store/tags/tag.selectors';
 
 export const TagsPage = () => {
   const dispatch = useDispatch();
@@ -16,12 +18,12 @@ export const TagsPage = () => {
   const fetchedTags = useSelector(getFetchedTags);
   const countOfTags = useSelector(getCountOfTags);
   const addedTag = useSelector(getLastAddedTag);
+  const deletedTag = useSelector(getLastDeletedTag);
 
   const [itemsParams, setItemsParams] = useState({
     skip: 0,
     take: 5,
   });
-  const [deletedTag, setDeletedTag] = useState();
   const [tags, setTags] = useState(fetchedTags);
 
   useEffect(() => {
@@ -38,9 +40,6 @@ export const TagsPage = () => {
 
   const onDelete = (id) => {
     dispatch(tagActions.remove(id));
-    setTags(tags.filter((tag) => tag.id !== Number(id)));
-
-    setDeletedTag(id);
   };
 
   const onChangePage = (page) => {

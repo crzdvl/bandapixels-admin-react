@@ -78,7 +78,13 @@ function remove(id) {
     tagService.remove(id)
       .then(
         (tag) => {
-          dispatch({ type: tagConstants.DELETE_SUCCESS, deletedTag: tag });
+          dispatch({
+            type: tagConstants.DELETE_SUCCESS,
+            deletedTag: {
+              ...tag,
+              timestamp: Date.now(),
+            },
+          });
         },
         (error) => {
           dispatch({ type: tagConstants.DELETE_FAILURE, error });

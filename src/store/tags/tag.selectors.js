@@ -9,3 +9,7 @@ export const getCountOfTags = (
 export const getLastAddedTag = (
   { tags: { createdTag } },
 ) => createdTag;
+
+export const getLastDeletedTag = (
+  { tags: { deletedTag } },
+) => deletedTag;

@@ -8,7 +8,9 @@
 /* HEADER */
 
 .ant-layout-header {
-    height: 64px;
+    height: 10vh !important;
+    display: flex;
+    align-items: center;
     padding: 0 50px;
     line-height: 64px;
     background: #fff;
@@ -40,11 +42,38 @@
     color: #171718;
 }
 
-.ant-layout-header {
-    height: 10vh !important;
+/* PAGINATION */
+
+.ant-pagination-item:focus-visible, .ant-pagination-item:hover {
+    border-color: #f9ca2a;
+}
+
+.ant-pagination-item-active {
+    border-color: #f9ca2a;
+}
+
+.ant-pagination-item-active:focus-visible a, .ant-pagination-item-active:hover a {
+    color: #f9ca2a;
+}
+
+.ant-pagination-next:focus-visible .ant-pagination-item-link, .ant-pagination-next:hover .ant-pagination-item-link, .ant-pagination-prev:focus-visible .ant-pagination-item-link, .ant-pagination-prev:hover .ant-pagination-item-link {
+    color: #f9ca2a;
+    border-color: #f9ca2a;
+}
+
+.ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-link-icon, .ant-pagination-jump-prev .ant-pagination-item-container .ant-pagination-item-link-icon {
+    color: #f9ca2a;
 }
 
 /* OTHER */
+
+.ant-table-cell p:focus-visible {
+    outline: none;
+}
+
+.ant-table-tbody>tr.ant-table-row:hover>td, .ant-table-tbody>tr>td.ant-table-cell-row-hover {
+    background: #f9ca2a2e;
+}
 
 .ant-layout-content {
     height: 90vh !important;
@@ -73,6 +102,10 @@
     border-radius: 8px;
     border-color: #f9ca2a !important;
     background: #f9ca2a !important;
+}
+
+.antBtnPrimaryYellow:hover {
+    background: rgba(249, 202, 42, 0.76) !important;
 }
 
 .ant-menu-horizontal {

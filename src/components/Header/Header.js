@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { Layout, Menu, Button } from 'antd';
 
+import styles from './Header.module.css';
 import logo from '../../assets/images/logo.svg';
 import { authActions } from '../../store/auth/auth.actions';
 import { localStorageService } from '../../services/localStorage.service';
@@ -20,13 +21,13 @@ export const Header = () => {
         <a href="https://bandapixels.com/"><img src={logo} alt="logo" /></a>
       </div>
       { token && (
-        <Menu theme="light" mode="horizontal" defaultSelectedKeys={['1']}>
-          <Menu.Item key="posts"><a href="/posts">Posts</a></Menu.Item>
-          <Menu.Item key="tags"><a href="/tags">Tags</a></Menu.Item>
-          <Menu.Item key="logout">
-            <Button htmlType="button" className="antBtnPrimaryYellow" onClick={onLogout}>Logout</Button>
-          </Menu.Item>
-        </Menu>
+        <div className={styles.wrapper}>
+          <Menu theme="light" mode="horizontal" defaultSelectedKeys={['1']}>
+            <Menu.Item key="posts"><a href="/posts">Posts</a></Menu.Item>
+            <Menu.Item key="tags"><a href="/tags">Tags</a></Menu.Item>
+          </Menu>
+          <Button htmlType="button" className="antBtnPrimaryYellow" onClick={onLogout}>Logout</Button>
+        </div>
       )}
     </Layout.Header>
   );

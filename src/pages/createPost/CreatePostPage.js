@@ -8,7 +8,7 @@ import { PostForm } from '../../components/PostForm/PostForm';
 import { getFetchedTags } from '../../store/tags/tag.selectors';
 import { postActions } from '../../store/posts/post.actions';
 import { tagActions } from '../../store/tags/tag.actions';
-import { getLastAddedPost } from '../../store/posts/post.selectors';
+import { getPost } from '../../store/posts/post.selectors';
 import { getUploadedFiles } from '../../store/files/file.selectors';
 
 export const CreatePostPage = () => {
@@ -16,7 +16,7 @@ export const CreatePostPage = () => {
   const navigate = useNavigate();
 
   const fetchedTags = useSelector(getFetchedTags);
-  const fetchedPost = useSelector(getLastAddedPost);
+  const fetchedPost = useSelector(getPost);
   const uploadedFiles = useSelector(getUploadedFiles);
 
   const [searchParams] = useSearchParams();

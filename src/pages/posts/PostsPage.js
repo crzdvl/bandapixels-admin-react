@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Layout } from '../../components/Layout/Layout';
 import { postActions } from '../../store/posts/post.actions';
 import { PostTable } from '../../components/PostTable/PostTable';
-import { getCountOfPosts, getFetchedPosts } from '../../store/posts/post.selectors';
+import { getCountOfPosts, getFetchedPosts, getPublishedPost } from '../../store/posts/post.selectors';
 
 export const PostsPage = () => {
   const dispatch = useDispatch();
   const fetchedPosts = useSelector(getFetchedPosts);
   const countOfPosts = useSelector(getCountOfPosts);
+  const getLastPublishedPost = useSelector(getPublishedPost);
 
   const [posts, setPosts] = useState([]);
   const [deletedPost, setDeletedPost] = useState();
@@ -21,7 +22,7 @@ export const PostsPage = () => {
 
   useEffect(() => {
     dispatch(postActions.getAll(itemsParams.skip, itemsParams.take));
-  }, [deletedPost]);
+  }, [deletedPost, getLastPublishedPost]);
 
   useEffect(() => {
     setPosts(fetchedPosts);
@@ -39,7 +40,6 @@ export const PostsPage = () => {
 
   const onPublish = (id, published) => {
     dispatch(postActions.publish(id, !published));
-    dispatch(postActions.getAll(itemsParams.skip, itemsParams.take));
   };
 
   const onDelete = (id) => {

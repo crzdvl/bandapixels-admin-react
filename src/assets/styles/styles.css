@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@600;800&display=swap');
+
+* {
+    font-family: 'Raleway' !important;
+    font-weight: 600;
+}
+
+/* HEADER */
+
 .ant-layout-header {
     height: 64px;
     padding: 0 50px;
@@ -30,3 +39,48 @@
 .ant-menu-horizontal>.ant-menu-item a:hover {
     color: #171718;
 }
+
+.ant-layout-header {
+    height: 10vh !important;
+}
+
+/* OTHER */
+
+.ant-layout-content {
+    height: 90vh !important;
+}
+
+.ant-input-focused, .ant-input:focus {
+    border-color: #f9ca2a !important;
+    box-shadow: 0 0 0 2px rgb(239 227 24 / 20%);
+}
+
+.ant-input:hover {
+    border-color: #f9ca2a !important;
+}
+
+.ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+    border-color: #f9ca2a !important;
+}
+
+.ant-input-affix-wrapper-focused, .ant-input-affix-wrapper:focus {
+    border-color: #f9ca2a !important;
+    box-shadow: 0 0 0 2px rgb(239 227 24 / 20%);
+}
+
+.antBtnPrimaryYellow {
+    color: #171718 !important;
+    border-radius: 8px;
+    border-color: #f9ca2a !important;
+    background: #f9ca2a !important;
+}
+
+.ant-menu-horizontal {
+    border-bottom: none;
+}
+
+.m30 {
+    margin: 30px;
+}
+
+

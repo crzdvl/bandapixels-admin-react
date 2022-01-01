@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'antd/dist/antd.min.css';
-import './index.css';
+import './assets/styles/styles.css';
 
 import React from 'react';
 import { render } from 'react-dom';

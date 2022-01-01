@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { Layout, Menu, Button } from 'antd';
 
 import logo from '../../assets/images/logo.svg';
-import './Header.css';
 import { authActions } from '../../store/auth/auth.actions';
 import { localStorageService } from '../../services/localStorage.service';
 

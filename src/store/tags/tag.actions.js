@@ -2,105 +2,86 @@ import { tagConstants } from './tag.constants';
 import { tagService } from '../../services/tag.service';
 
 function getAll(skip, take) {
-  function request() { return { type: tagConstants.GETALL_REQUEST }; }
-  function success({ data, count }) { return { type: tagConstants.GETALL_SUCCESS, data, count }; }
-  function failure(error) { return { type: tagConstants.GETALL_FAILURE, error }; }
-
   return (dispatch) => {
-    dispatch(request());
+    dispatch({ type: tagConstants.GETALL_REQUEST });
 
     tagService.getAll(skip, take)
       .then(
         (data) => {
-          dispatch(success({
-            data: data.tags,
-            count: data.totalCount,
-          }));
+          dispatch({
+            type: tagConstants.GETALL_SUCCESS,
+            allTags: {
+              data: data.tags,
+              count: data.totalCount,
+            },
+          });
         },
         (error) => {
-          dispatch(failure(error));
+          dispatch({ type: tagConstants.GETALL_FAILURE, error });
         },
       );
   };
 }
 
 function getOne(id) {
-  function request() { return { type: tagConstants.GETONE_REQUEST }; }
-  function success(tag) { return { type: tagConstants.GETONE_SUCCESS, tag }; }
-  function failure(error) { return { type: tagConstants.GETONE_FAILURE, error }; }
-
   return (dispatch) => {
-    dispatch(request());
+    dispatch({ type: tagConstants.GETONE_REQUEST });
 
     tagService.getOne(id)
       .then(
         (tag) => {
-          dispatch(success(tag), {
-            payload: tag,
-          });
+          dispatch({ type: tagConstants.GETONE_SUCCESS, tag });
         },
         (error) => {
-          dispatch(failure(error));
+          dispatch({ type: tagConstants.GETONE_FAILURE, error });
         },
       );
   };
 }
 
 function create(name) {
-  function request() { return { type: tagConstants.CREATE_REQUEST }; }
-  function success(tag) { return { type: tagConstants.CREATE_SUCCESS, tag }; }
-  function failure(error) { return { type: tagConstants.CREATE_FAILURE, error }; }
-
   return (dispatch) => {
-    dispatch(request());
+    dispatch({ type: tagConstants.CREATE_REQUEST });
 
     tagService.create(name)
       .then(
-        (tag) => {
-          dispatch(success(tag));
+        (createdTag) => {
+          dispatch({ type: tagConstants.CREATE_SUCCESS, createdTag });
         },
         (error) => {
-          dispatch(failure(error));
+          dispatch({ type: tagConstants.CREATE_FAILURE, error });
         },
       );
   };
 }
 
 function update(id, name) {
-  function request() { return { type: tagConstants.UPDATE_REQUEST }; }
-  function success(tag) { return { type: tagConstants.UPDATE_SUCCESS, tag }; }
-  function failure(error) { return { type: tagConstants.UPDATE_FAILURE, error }; }
-
   return (dispatch) => {
-    dispatch(request());
+    dispatch({ type: tagConstants.UPDATE_REQUEST });
 
     tagService.update(id, name)
       .then(
         (tag) => {
-          dispatch(success(tag));
+          dispatch({ type: tagConstants.UPDATE_SUCCESS, tag });
         },
         (error) => {
-          dispatch(failure(error));
+          dispatch({ type: tagConstants.UPDATE_FAILURE, error });
         },
       );
   };
 }
 
 function remove(id) {
-  function request() { return { type: tagConstants.DELETE_REQUEST }; }
-  function success(deletedTag) { return { type: tagConstants.DELETE_SUCCESS, deletedTag }; }
-  function failure(error) { return { type: tagConstants.DELETE_FAILURE, error }; }
-
   return (dispatch) => {
-    dispatch(request());
+    dispatch({ type: tagConstants.DELETE_REQUEST });
 
     tagService.remove(id)
       .then(
         (tag) => {
-          dispatch(success(tag));
+          dispatch({ type: tagConstants.DELETE_SUCCESS, deletedTag: tag });
         },
         (error) => {
-          dispatch(failure(error));
+          dispatch({ type: tagConstants.DELETE_FAILURE, error });
         },
       );
   };

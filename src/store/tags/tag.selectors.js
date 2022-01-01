@@ -1,11 +1,11 @@
 export const getFetchedTags = (
-  { tags: { tags: { data } } },
+  { tags: { allTags: { data } } },
 ) => data;
 
 export const getCountOfTags = (
-  { tags: { tags: { count } } },
+  { tags: { allTags: { count } } },
 ) => count;
 
 export const getLastAddedTag = (
-  { tags: { tag } },
-) => tag;
+  { tags: { createdTag } },
+) => createdTag;

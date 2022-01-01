@@ -1,7 +1,7 @@
 import { tagConstants } from './tag.constants';
 
 const initialState = () => ({
-  tags: {
+  allTags: {
     data: [],
     count: 0,
   },
@@ -17,10 +17,7 @@ export function tags(state = initialState(), action) {
     case tagConstants.GETALL_SUCCESS:
       return {
         ...state,
-        tags: {
-          count: action.count,
-          data: action.data,
-        },
+        allTags: action.allTags,
       };
     case tagConstants.GETALL_FAILURE:
       return {
@@ -35,7 +32,7 @@ export function tags(state = initialState(), action) {
     case tagConstants.CREATE_SUCCESS:
       return {
         ...state,
-        tag: action.tag,
+        createdTag: action.tag,
       };
     case tagConstants.CREATE_FAILURE:
       return {

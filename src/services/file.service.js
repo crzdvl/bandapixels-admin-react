@@ -19,7 +19,7 @@ function upload(type, file) {
 
   return fetch(`${backendUrl}/admin/files?type=${type}`, requestOptions)
     .then(authService.handleResponse)
-    .then((result) => result);
+    .then((data) => data);
 }
 
 export const fileService = {

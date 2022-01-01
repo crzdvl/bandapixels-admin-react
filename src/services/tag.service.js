@@ -11,8 +11,8 @@ function getAll(skip = 0, take = 10) {
   };
   return fetch(`${backendUrl}/admin/tags?skip=${skip}&take=${take}`, requestOptions)
     .then(authService.handleResponse)
-    .then((tags) => tags)
-    .catch((err) => console.log(err));
+    .then((data) => data)
+    .catch((err) => err);
 }
 
 function getOne(id) {
@@ -24,7 +24,7 @@ function getOne(id) {
 
   return fetch(`${backendUrl}/admin/tags/${id}`, requestOptions)
     .then(authService.handleResponse)
-    .then((tag) => tag);
+    .then((data) => data);
 }
 
 function create(name) {
@@ -37,7 +37,7 @@ function create(name) {
 
   return fetch(`${backendUrl}/admin/tags`, requestOptions)
     .then(authService.handleResponse)
-    .then((tag) => tag);
+    .then((data) => data);
 }
 
 function update(id, name) {
@@ -54,7 +54,7 @@ function update(id, name) {
 
   return fetch(`${backendUrl}/admin/tags/${id}`, requestOptions)
     .then(authService.handleResponse)
-    .then((tag) => tag);
+    .then((data) => data);
 }
 
 function remove(id) {

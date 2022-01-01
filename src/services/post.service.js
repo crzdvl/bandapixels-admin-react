@@ -13,8 +13,8 @@ function getAll(skip = 0, take = 10) {
   };
   return fetch(`${backendUrl}/admin/posts?skip=${skip}&take=${take}`, requestOptions)
     .then(authService.handleResponse)
-    .then((posts) => posts)
-    .catch((err) => console.log(err));
+    .then((data) => data)
+    .catch((err) => err);
 }
 
 function getOne(id) {
@@ -26,7 +26,7 @@ function getOne(id) {
 
   return fetch(`${backendUrl}/admin/posts/${id}`, requestOptions)
     .then(authService.handleResponse)
-    .then((post) => post);
+    .then((data) => data);
 }
 
 function create(data) {
@@ -70,7 +70,7 @@ function update(id, data) {
 
   return fetch(`${backendUrl}/admin/posts/${id}`, requestOptions)
     .then(authService.handleResponse)
-    .then((tag) => tag);
+    .then((data) => data);
 }
 
 function remove(id) {

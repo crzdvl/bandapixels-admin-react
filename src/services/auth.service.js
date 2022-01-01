@@ -36,14 +36,14 @@ function login(email, password) {
 
   return fetch(`${backendUrl}/users/login`, requestOptions)
     .then(handleResponse)
-    .then(async (user) => {
-      if (user?.access_token) {
-        await localStorageService.setKey('token', user.access_token);
+    .then(async (data) => {
+      if (data?.access_token) {
+        await localStorageService.setKey('token', data.access_token);
 
         history.go('/posts');
       }
 
-      return user;
+      return data;
     });
 }
 

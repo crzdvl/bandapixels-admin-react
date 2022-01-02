@@ -1,7 +1,7 @@
 import { localStorageService } from './localStorage.service';
 import { history } from '../helpers/history';
 
-const backendUrl = 'http://localhost:3000/api';
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 function logout() {
   localStorageService.removeKey('token');

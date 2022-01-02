@@ -1,7 +1,7 @@
 import { authService } from './auth.service';
 import { authHeader } from '../helpers';
 
-const backendUrl = 'http://localhost:3000/api';
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 function getAll(skip = 0, take = 10) {
   const authorizationHeader = authHeader();

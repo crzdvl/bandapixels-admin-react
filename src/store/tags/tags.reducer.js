@@ -32,7 +32,7 @@ export function tags(state = initialState(), action) {
     case tagConstants.CREATE_SUCCESS:
       return {
         ...state,
-        createdTag: action.tag,
+        createdTag: action.createdTag,
       };
     case tagConstants.CREATE_FAILURE:
       return {

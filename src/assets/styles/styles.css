@@ -157,6 +157,8 @@
 
 .ant-alert {
     width: 50vh;
+    float: right;
+    margin: 20px 0;
 }
 
 .m30 {

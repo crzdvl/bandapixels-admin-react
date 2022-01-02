@@ -1,8 +1,6 @@
 import { authService } from './auth.service';
 import { authHeader } from '../helpers';
 
-import { history } from '../helpers/history';
-
 const backendUrl = 'http://localhost:3000/api';
 
 function getAll(skip = 0, take = 10) {
@@ -39,9 +37,7 @@ function create(data) {
 
   return fetch(`${backendUrl}/admin/posts`, requestOptions)
     .then(authService.handleResponse)
-    .then(() => {
-      history.go('/posts');
-    });
+    .then((data) => data);
 }
 
 function publish(id, publishValue) {

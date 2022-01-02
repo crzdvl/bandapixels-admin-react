@@ -5,6 +5,7 @@ const initialState = () => ({
     data: [],
     count: 0,
   },
+  error: null,
 });
 
 export function posts(state = initialState(), action) {

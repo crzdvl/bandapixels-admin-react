@@ -2,6 +2,7 @@ import { fileConstants } from './file.constants';
 
 const initialState = () => ({
   files: [],
+  error: null,
 });
 
 export function file(state = initialState(), action) {

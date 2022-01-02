@@ -17,3 +17,7 @@ export const getPost = (
 export const getPublishedPost = (
   { posts: { publishedPost } },
 ) => publishedPost;
+
+export const getPostError = (
+  { posts: { error } },
+) => error;

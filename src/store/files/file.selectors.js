@@ -1,3 +1,7 @@
 export const getUploadedFiles = (
-  { file },
-) => file;
+  { file: { files } },
+) => files;
+
+export const getFileError = (
+  { file: { error } },
+) => error;

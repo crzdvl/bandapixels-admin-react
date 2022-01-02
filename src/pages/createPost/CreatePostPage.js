@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { useSearchParams, useNavigate } from 'react-router-dom';
+
+import styles from './CreatePostPage.module.css';
 import { fileActions } from '../../store/files/file.actions';
-import { Header } from '../../components/Header/Header';
 import { PostForm } from '../../components/PostForm/PostForm';
 import { getFetchedTags } from '../../store/tags/tag.selectors';
 import { postActions } from '../../store/posts/post.actions';
 import { tagActions } from '../../store/tags/tag.actions';
-import { getPost } from '../../store/posts/post.selectors';
-import { getUploadedFiles } from '../../store/files/file.selectors';
+import { getPost, getPostError } from '../../store/posts/post.selectors';
+import { getFileError, getUploadedFiles } from '../../store/files/file.selectors';
+import { AlertError } from '../../components/AlertError/AlertError';
+import { Layout } from '../../components/Layout/Layout';
 
 export const CreatePostPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const fetchedTags = useSelector(getFetchedTags);
   const fetchedPost = useSelector(getPost);
+  const fileError = useSelector(getFileError);
+  const postError = useSelector(getPostError);
+  const fetchedTags = useSelector(getFetchedTags);
   const uploadedFiles = useSelector(getUploadedFiles);
 
   const [searchParams] = useSearchParams();
@@ -70,16 +74,16 @@ export const CreatePostPage = () => {
     const postData = {
       ...formData,
       imageId:
-        uploadedFiles?.files?.filter((file) => file.type === 'IMAGE')[0]?.id
+        uploadedFiles?.filter((file) => file.type === 'IMAGE')[0]?.id
         || fetchedPost?.post?.imageId,
       previewImageId:
-        uploadedFiles?.files?.filter((file) => file.type === 'PREVIEW')[0]?.id
+        uploadedFiles?.filter((file) => file.type === 'PREVIEW')[0]?.id
         || fetchedPost?.post?.previewImageId,
       body: htmlValue,
       tagsIds: selectedTags,
     };
 
-    if (postId && (uploadedFiles.files.length === countOfNedeedUploads)) {
+    if (postId && (uploadedFiles.length === countOfNedeedUploads)) {
       dispatch(postActions.update(postId, postData));
       navigate('/posts');
     } else if (
@@ -88,7 +92,7 @@ export const CreatePostPage = () => {
       && selectedTags.length
       && image.length
       && imagePreview.length
-      && (uploadedFiles.files.length === countOfNedeedUploads)
+      && (uploadedFiles.length === countOfNedeedUploads)
     ) {
       dispatch(postActions.create(postData));
       navigate('/posts');
@@ -137,14 +141,17 @@ export const CreatePostPage = () => {
       onFinish={onFinish}
     />
   );
+
   return (
-    <div>
-      <Header />
-      {postId ? (Object.keys(formInitialValue).length !== 0 && (
-        PostFormData
-      )) : (
-        PostFormData
-      )}
-    </div>
+    <Layout>
+      <div className={styles.wrapper}>
+        {(fileError || postError) && <AlertError error={fileError || postError} />}
+        {postId ? (Object.keys(formInitialValue).length !== 0 && (
+          PostFormData
+        )) : (
+          PostFormData
+        )}
+      </div>
+    </Layout>
   );
 };

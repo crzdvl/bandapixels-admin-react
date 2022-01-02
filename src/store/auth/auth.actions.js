@@ -8,21 +8,17 @@ function logout() {
 }
 
 function login(username, password) {
-  function request(user) { return { type: authConstants.LOGIN_REQUEST, user }; }
-  function success(user) { return { type: authConstants.LOGIN_SUCCESS, user }; }
-  function failure(error) { return { type: authConstants.LOGIN_FAILURE, error }; }
-
   return (dispatch) => {
-    dispatch(request({ username }));
+    dispatch({ type: authConstants.LOGIN_REQUEST });
 
     authService.login(username, password)
       .then(
         (user) => {
-          dispatch(success(user));
+          dispatch({ type: authConstants.LOGIN_SUCCESS, user });
           history.go('/posts');
         },
         (error) => {
-          dispatch(failure(error));
+          dispatch({ type: authConstants.LOGIN_FAILURE, error });
         },
       );
   };

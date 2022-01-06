@@ -25,6 +25,7 @@ export const CreatePostPage = () => {
 
   const [searchParams] = useSearchParams();
   const [formData, setFormData] = useState();
+  const [formDataUpdated, setFormDataUpdated] = useState(false);
   const [image, setImage] = useState([]);
   const [tags, setTags] = useState(fetchedTags);
   const [htmlValue, setHtmlValue] = useState('');
@@ -70,7 +71,7 @@ export const CreatePostPage = () => {
     setTags(fetchedTags);
   }, [fetchedTags]);
 
-  useEffect(() => {
+  const updateData = () => {
     const postData = {
       ...formData,
       imageId:
@@ -97,7 +98,15 @@ export const CreatePostPage = () => {
       dispatch(postActions.create(postData));
       navigate('/posts');
     }
+  };
+
+  useEffect(() => {
+    updateData();
   }, [uploadedFiles]);
+
+  useEffect(() => {
+    updateData();
+  }, [formDataUpdated]);
 
   const onFinish = (data) => {
     if (postId) {
@@ -112,6 +121,14 @@ export const CreatePostPage = () => {
         setCountOfNedeedUploads(countOfNewUploads + 1);
         dispatch(fileActions.upload('PREVIEW', imagePreview[0]));
       }
+      if (
+        ((image[0] && ('url' in image[0]))
+        && (imagePreview[0] && ('url' in imagePreview[0])))
+      ) {
+        setCountOfNedeedUploads(0);
+      }
+
+      setFormDataUpdated(true);
     } else if (
       data
       && htmlValue

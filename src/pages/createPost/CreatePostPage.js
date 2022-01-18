@@ -46,7 +46,7 @@ export const CreatePostPage = () => {
 
   useEffect(() => {
     if (postId && fetchedPost && Object.keys(fetchedPost.post).length !== 0) {
-      const fileContentUrl = 'http://localhost:3000/api/admin/files/';
+      const fileContentUrl = `${process.env.REACT_APP_BACKEND_URL}/admin/files/`;
       setImage([
         ...image,
         {

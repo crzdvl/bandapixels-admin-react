@@ -34,7 +34,8 @@
     "shortid": "^2.2.16"
   },
   "scripts": {
-    "start": "HTTPS=false react-scripts start",
+    "start": "PORT=9001 react-scripts start",
+    "start:prod": "pm2 start npm --name \"stage-react\" -- start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

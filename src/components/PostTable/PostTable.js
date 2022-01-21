@@ -37,6 +37,23 @@ const PostTable = ({ posts, onPublish, onDelete }) => (
       )}
     />
     <Table.Column
+      title="Preview"
+      dataIndex="preview"
+      key="preview"
+      render={(text, record) => (
+        <Space size="middle">
+          <Button
+            type="primary"
+            id={record.id}
+          >
+            <a href={`${process.env.REACT_APP_BACKEND_URL}/admin/posts/content/${record.slug}`} target="_blank">
+              Preview
+            </a>
+          </Button>
+        </Space>
+      )}
+    />
+    <Table.Column
       title="Edit"
       dataIndex="published"
       key="published"

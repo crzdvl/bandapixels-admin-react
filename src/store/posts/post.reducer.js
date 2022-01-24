@@ -1,10 +1,12 @@
 import { postConstants } from './post.constants';
 
 const initialState = () => ({
-  allPosts: {
-    data: [],
-    count: 0,
-  },
+  posts: [],
+  count: 0,
+  createdPost: null,
+  updatedPost: null,
+  deletedPost: null,
+  publishedPost: null,
   error: null,
 });
 
@@ -18,7 +20,7 @@ export function posts(state = initialState(), action) {
     case postConstants.GETALL_SUCCESS:
       return {
         ...state,
-        allPosts: action.allPosts,
+        posts: action.posts,
       };
     case postConstants.GETALL_FAILURE:
       return {
@@ -36,6 +38,21 @@ export function posts(state = initialState(), action) {
         createdPost: action.createdPost,
       };
     case postConstants.CREATE_FAILURE:
+      return {
+        ...state,
+        error: action.error,
+      };
+    case postConstants.GETCOUNT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case postConstants.GETCOUNT_SUCCESS:
+      return {
+        ...state,
+        count: action.count,
+      };
+    case postConstants.GETCOUNT_FAILURE:
       return {
         ...state,
         error: action.error,

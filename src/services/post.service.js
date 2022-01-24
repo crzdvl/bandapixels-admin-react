@@ -22,7 +22,19 @@ function getOne(id) {
     headers: { 'Content-Type': 'application/json', ...authorizationHeader },
   };
 
-  return fetch(`${backendUrl}/admin/posts/${id}`, requestOptions)
+  return fetch(`${backendUrl}/admin/posts/info/${id}`, requestOptions)
+    .then(authService.handleResponse)
+    .then((data) => data);
+}
+
+function getCountOfPosts() {
+  const authorizationHeader = authHeader();
+  const requestOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json', ...authorizationHeader },
+  };
+
+  return fetch(`${backendUrl}/admin/posts/count`, requestOptions)
     .then(authService.handleResponse)
     .then((data) => data);
 }
@@ -87,4 +99,5 @@ export const postService = {
   update,
   remove,
   publish,
+  getCountOfPosts,
 };

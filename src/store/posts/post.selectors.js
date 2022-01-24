@@ -1,9 +1,9 @@
 export const getFetchedPosts = (
-  { posts: { allPosts: { data } } },
-) => data;
+  { posts: { posts } },
+) => posts;
 
 export const getCountOfPosts = (
-  { posts: { allPosts: { count } } },
+  { posts: { count } },
 ) => count;
 
 export const getLastCreatedPost = (

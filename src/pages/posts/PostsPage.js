@@ -22,6 +22,7 @@ export const PostsPage = () => {
 
   useEffect(() => {
     dispatch(postActions.getAll(itemsParams.skip, itemsParams.take));
+    dispatch(postActions.getCountOfPosts());
   }, [deletedPost, getLastPublishedPost]);
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export const PostsPage = () => {
   const onChangePage = (page) => {
     const newSkip = (page - 1) * itemsParams.take;
     dispatch(postActions.getAll(newSkip, itemsParams.take));
+    dispatch(postActions.getCountOfPosts());
 
     setItemsParams({
       ...itemsParams,

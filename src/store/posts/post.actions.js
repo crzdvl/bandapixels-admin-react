@@ -10,10 +10,7 @@ function getAll(skip, take) {
         (data) => {
           dispatch({
             type: postConstants.GETALL_SUCCESS,
-            allPosts: {
-              data: data.posts,
-              count: data.totalCount,
-            },
+            posts: data,
           });
         },
         (error) => {
@@ -34,6 +31,22 @@ function getOne(id) {
         },
         (error) => {
           dispatch({ type: postConstants.GETONE_FAILURE, error });
+        },
+      );
+  };
+}
+
+function getCountOfPosts() {
+  return (dispatch) => {
+    dispatch({ type: postConstants.GETCOUNT_REQUEST });
+
+    postService.getCountOfPosts()
+      .then(
+        (post) => {
+          dispatch({ type: postConstants.GETCOUNT_SUCCESS, count: post.totalCount });
+        },
+        (error) => {
+          dispatch({ type: postConstants.GETCOUNT_FAILURE, error });
         },
       );
   };
@@ -118,4 +131,5 @@ export const postActions = {
   update,
   remove,
   publish,
+  getCountOfPosts,
 };

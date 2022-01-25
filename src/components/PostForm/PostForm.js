@@ -95,6 +95,9 @@ const PostForm = ({
           fileList={image}
           beforeUpload={() => false}
           onChange={onUploadImage}
+          showUploadList={({
+            showPreviewIcon: false,
+          })}
         >
           {image?.length >= 1 ? null : 'uploadButton'}
         </Upload>
@@ -113,6 +116,9 @@ const PostForm = ({
           fileList={imagePreview}
           beforeUpload={() => false}
           onChange={onUploadImagePreview}
+          showUploadList={({
+            showPreviewIcon: false,
+          })}
         >
           {imagePreview?.length >= 1 ? null : 'uploadButton'}
         </Upload>

@@ -23,6 +23,7 @@ export const CreatePostPage = () => {
   const fetchedTags = useSelector(getFetchedTags);
   const uploadedFiles = useSelector(getUploadedFiles);
 
+  const [scrolled, setScrolled] = useState(false);
   const [searchParams] = useSearchParams();
   const [formData, setFormData] = useState();
   const [formDataUpdated, setFormDataUpdated] = useState(false);
@@ -36,6 +37,14 @@ export const CreatePostPage = () => {
   const [countOfNedeedUploads, setCountOfNedeedUploads] = useState(2);
 
   const postId = searchParams.get('id');
+  useEffect(() => {
+    if ((fileError || postError) && !scrolled) {
+      setScrolled(true);
+
+      window.scrollTo(0, 0);
+    }
+  }, [fileError, postError]);
+
   useEffect(() => {
     dispatch(tagActions.getAll(0, 100));
 

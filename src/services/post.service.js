@@ -9,7 +9,7 @@ function getAll(skip = 0, take = 10) {
     method: 'GET',
     headers: { 'Content-Type': 'application/json', ...authorizationHeader },
   };
-  return fetch(`${backendUrl}/admin/posts?skip=${skip}&take=${take}`, requestOptions)
+  return fetch(`${backendUrl}/admin/posts?skip=${skip}&take=${take}&all=true`, requestOptions)
     .then(authService.handleResponse)
     .then((data) => data)
     .catch((err) => err);

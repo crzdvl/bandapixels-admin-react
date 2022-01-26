@@ -3,6 +3,7 @@ import {
   Form, Input, Button, Upload, InputNumber,
 } from 'antd';
 
+import { Link } from 'react-router-dom';
 import { CustomEditor } from '../CustomEditor/CustomEditor';
 import styles from './PostForm.module.css';
 import { CustomDropdown } from '../Dropdown/Dropdown';
@@ -142,6 +143,15 @@ const PostForm = ({
         >
           Submit
         </Button>
+        <Link to="/posts">
+          <Button
+            className={styles.my2}
+            type="danger"
+            htmlType="button"
+          >
+            Cancel
+          </Button>
+        </Link>
       </Form.Item>
     </Form>
   );

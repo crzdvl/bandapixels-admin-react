@@ -12,3 +12,8 @@
     border-color: #f9ca2a !important;
     background: #f9ca2a !important;
 }
+
+.my2 {
+    margin: 0 20px;
+    border-radius: 8px;
+}
